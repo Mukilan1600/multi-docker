@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t mukilan1600/test_build -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run mukilan1600/test_build npm test -- --watchAll=false
+
+after_install:
+  - docker build -t mukilan1600/multi_client ./client
+  - docker build -t mukilan1600/multi_worker ./worker
+  - docker build -t mukilan1600/multi_server ./server
+  - docker build -t mukilan1600/multi_nginx ./nginx
+
+  - echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+
+  - docker push mukilan1600/multi_client
+  - docker push mukilan1600/multi_worker
+  - docker push mukilan1600/multi_server
+  - docker push mukilan1600/multi_nginx
