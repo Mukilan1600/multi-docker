@@ -20,3 +20,15 @@ after_success:
   - docker push mukilan1600/multi_worker
   - docker push mukilan1600/multi_server
   - docker push mukilan1600/multi_nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "multi-docker"
+  env: "Multidocker-env"
+  bucket_name: "elasticbeanstalk-us-east-2-344305196670"
+  bucket_path: "multi-docker"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
