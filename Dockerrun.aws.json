@@ -5,32 +5,37 @@
       "name": "redis",
       "hostname": "redis",
       "image": "redis:latest",
-      "essential": false
+      "essential": false,
+      "memory": 64
     },
     {
       "name": "postgres",
       "hostname": "postgres",
       "image": "postgres",
-      "essential": false
+      "essential": false,
+      "memory": 64
     },
     {
       "name": "client",
       "hostname": "client",
       "image": "mukilan1600/multi_client",
-      "essential": false
+      "essential": false,
+      "memory": 64
     },
     {
       "name": "server",
       "hostname": "api",
       "image": "mukilan1600/multi_server",
       "essential": false,
-      "links": ["redis", "postgres"]
+      "links": ["redis", "postgres"],
+      "memory": 64
     },
     {
       "name": "worker",
       "image": "mukilan1600/multi_worker",
       "essential": false,
-      "links": ["redis", "postgres"]
+      "links": ["redis", "postgres"],
+      "memory": 64
     },
     {
       "name": "nginx",
@@ -43,7 +48,8 @@
           "containerPort": 80
         }
       ],
-      "links": ["client", "server"]
+      "links": ["client", "server"],
+      "memory": 64
     }
   ]
 }
