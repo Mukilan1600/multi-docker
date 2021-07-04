@@ -8,7 +8,7 @@ before_install:
 script:
   - docker run mukilan1600/test_build npm test -- --watchAll=false
 
-after_install:
+after_success:
   - docker build -t mukilan1600/multi_client ./client
   - docker build -t mukilan1600/multi_worker ./worker
   - docker build -t mukilan1600/multi_server ./server
