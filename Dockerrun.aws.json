@@ -1,0 +1,49 @@
+{
+  "AWSEBDockerrunVersion": "2",
+  "containerDefinitions": [
+    {
+      "name": "redis",
+      "hostname": "redis",
+      "image": "redis:latest",
+      "essential": false
+    },
+    {
+      "name": "postgres",
+      "hostname": "postgres",
+      "image": "postgres",
+      "essential": false
+    },
+    {
+      "name": "client",
+      "hostname": "client",
+      "image": "mukilan1600/multi_client",
+      "essential": false
+    },
+    {
+      "name": "server",
+      "hostname": "api",
+      "image": "mukilan1600/multi_server",
+      "essential": false,
+      "links": ["redis", "postgres"]
+    },
+    {
+      "name": "worker",
+      "image": "mukilan1600/multi_worker",
+      "essential": false,
+      "links": ["redis", "postgres"]
+    },
+    {
+      "name": "nginx",
+      "hostname": "nginx",
+      "image": "mukilan1600/multi_nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client", "server"]
+    }
+  ]
+}
